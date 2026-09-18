@@ -1,22 +1,5 @@
 namespace ScreenTranslator.Models;
 
-public enum TriggerKind
-{
-    Key,
-    MouseButton,
-    WheelUp,
-    WheelDown
-}
-
-public enum TriggerMouseButton
-{
-    Left,
-    Middle,
-    Right,
-    XButton1,
-    XButton2
-}
-
 public sealed class HotkeyTrigger
 {
     public TriggerKind Kind { get; set; } = TriggerKind.Key;
