@@ -1,0 +1,24 @@
+THIRD-PARTY NOTICES
+===================
+
+This product bundles or depends on the following components.
+
+1. .NET / WPF (MIT License) — Copyright (c) .NET Foundation and Contributors.
+2. System.Drawing.Common (MIT License) — Copyright (c) .NET Foundation and Contributors.
+3. Microsoft.ML.OnnxRuntime (MIT License) — Copyright (c) Microsoft Corporation.
+4. Tesseract OCR (Apache License 2.0) — Copyright (c) Google Inc. and contributors.
+5. Tesseract language data, downloaded automatically from
+   github.com/tesseract-ocr/tessdata_fast (Apache License 2.0) — Copyright (c)
+   Google Inc. and contributors.
+
+Optional components, only if you enable them:
+
+6. OPUS-MT translation models (CC BY 4.0) — Language Technology Research Group,
+   University of Helsinki. If you ship these models you must credit the authors
+   and state that the models are licensed under CC BY 4.0.
+
+Services accessed over the network are used through their documented public APIs
+with credentials supplied by the end user. No API keys are distributed with this
+software.
+
+Full license texts are available from the respective projects.

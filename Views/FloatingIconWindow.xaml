@@ -1,0 +1,100 @@
+<Window x:Class="ScreenTranslator.Views.FloatingIconWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:loc="clr-namespace:ScreenTranslator.Localization"
+        Title="ScreenTranslator"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        Background="Transparent"
+        ShowInTaskbar="False"
+        Topmost="True"
+        ResizeMode="NoResize"
+        SizeToContent="WidthAndHeight"
+        WindowStartupLocation="Manual"
+        FlowDirection="{Binding Source={x:Static loc:Loc.Instance}, Path=FlowDirection}">
+
+    <Window.Resources>
+        <Style x:Key="PanelButton" TargetType="Button">
+            <Setter Property="Height" Value="36" />
+            <Setter Property="Margin" Value="6,3,6,3" />
+            <Setter Property="Padding" Value="10,0,10,0" />
+            <Setter Property="HorizontalContentAlignment" Value="Left" />
+            <Setter Property="Background" Value="#22FFFFFF" />
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="Bd" Background="{TemplateBinding Background}" CornerRadius="6" Padding="{TemplateBinding Padding}">
+                            <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Bd" Property="Background" Value="#55FFFFFF" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
+    <StackPanel Orientation="Horizontal">
+
+        <Border x:Name="PanelRoot"
+                Width="0"
+                Background="#E6202430"
+                CornerRadius="10"
+                Margin="0,0,6,0">
+            <StackPanel x:Name="PanelContent" Width="210" Margin="0,8,0,8">
+                <TextBlock Text="{Binding Source={x:Static loc:Loc.Instance}, Path=[AppName]}"
+                           Foreground="#9FB4FF" FontWeight="SemiBold" Margin="12,2,12,8" />
+
+                <Button Style="{StaticResource PanelButton}" Click="OnTranslateClick"
+                        Content="{Binding Source={x:Static loc:Loc.Instance}, Path=[Translate]}" />
+
+                <Button Style="{StaticResource PanelButton}" Click="OnRegionClick"
+                        Content="{Binding Source={x:Static loc:Loc.Instance}, Path=[SelectRegion]}" />
+
+                <Button Style="{StaticResource PanelButton}" Click="OnSavedRegionClick"
+                        Content="{Binding Source={x:Static loc:Loc.Instance}, Path=[SavedRegionHotkey]}" />
+
+                <Button Style="{StaticResource PanelButton}" Click="OnAdHocRegionClick"
+                        Content="{Binding Source={x:Static loc:Loc.Instance}, Path=[AdHocRegionHotkey]}" />
+
+                <Button Style="{StaticResource PanelButton}" Click="OnClearClick"
+                        Content="{Binding Source={x:Static loc:Loc.Instance}, Path=[ClearOverlay]}" />
+
+                <Separator Margin="10,6,10,6" Background="#33FFFFFF" />
+
+                <Button Style="{StaticResource PanelButton}" Click="OnTextViewClick"
+                        Content="{Binding Source={x:Static loc:Loc.Instance}, Path=[ViewText]}" />
+
+                <Button Style="{StaticResource PanelButton}" Click="OnManualTranslateClick"
+                        Content="{Binding Source={x:Static loc:Loc.Instance}, Path=[ManualTranslate]}" />
+
+                <Button Style="{StaticResource PanelButton}" Click="OnSettingsClick"
+                        Content="{Binding Source={x:Static loc:Loc.Instance}, Path=[Settings]}" />
+
+                <Button Style="{StaticResource PanelButton}" Click="OnExitClick"
+                        Content="{Binding Source={x:Static loc:Loc.Instance}, Path=[Exit]}" />
+
+                <TextBlock x:Name="StatusText" Foreground="#88FFFFFF" FontSize="11"
+                           Margin="12,6,12,0" TextWrapping="Wrap" />
+            </StackPanel>
+        </Border>
+
+        <Border x:Name="IconRoot"
+                Width="46" Height="46"
+                Background="#E62B6CF5"
+                CornerRadius="23"
+                Cursor="Hand"
+                MouseLeftButtonDown="OnIconMouseDown"
+                MouseRightButtonUp="OnIconRightClick">
+            <TextBlock Text="A⇄" Foreground="White" FontSize="16" FontWeight="Bold"
+                       HorizontalAlignment="Center" VerticalAlignment="Center" />
+        </Border>
+
+    </StackPanel>
+</Window>

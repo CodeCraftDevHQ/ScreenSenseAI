@@ -1,0 +1,201 @@
+using System.ComponentModel;
+using System.Windows;
+
+namespace ScreenTranslator.Localization;
+
+public sealed class Loc : INotifyPropertyChanged
+{
+    public static Loc Instance { get; } = new();
+
+    private Dictionary<string, string> _strings = English;
+    private string _language = "en";
+
+    public event PropertyChangedEventHandler? PropertyChanged;
+
+    public string this[string key] => _strings.TryGetValue(key, out var value) ? value : key;
+
+    public string Language => _language;
+
+    public FlowDirection FlowDirection => _language == "fa" ? FlowDirection.RightToLeft : FlowDirection.LeftToRight;
+
+    public void SetLanguage(string code)
+    {
+        _language = code == "fa" ? "fa" : "en";
+        _strings = _language == "fa" ? Persian : English;
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Item[]"));
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(FlowDirection)));
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Language)));
+    }
+
+    public static readonly Dictionary<string, string> English = new()
+    {
+        ["AppName"] = "Screen Translator",
+        ["Translate"] = "Translate screen",
+        ["SelectRegion"] = "Select region",
+        ["ClearOverlay"] = "Clear overlay",
+        ["Settings"] = "Settings",
+        ["Exit"] = "Exit",
+        ["ViewText"] = "Extracted & translated text",
+        ["ManualTranslate"] = "Translate text",
+        ["ExtractedTextLabel"] = "Extracted text",
+        ["TranslatedTextLabel"] = "Translated text",
+        ["Copy"] = "Copy",
+        ["NoTranslationYet"] = "No translation yet. Translate the screen first.",
+        ["InputTextLabel"] = "Text to translate",
+        ["ResultLabel"] = "Translation",
+        ["TranslateButton"] = "Translate",
+        ["Save"] = "Save",
+        ["Cancel"] = "Cancel",
+        ["TabGeneral"] = "General",
+        ["TabLanguages"] = "Languages",
+        ["TabShortcuts"] = "Shortcuts",
+        ["TabOcr"] = "OCR",
+        ["TabTranslation"] = "Translation",
+        ["TabAppearance"] = "Appearance",
+        ["TabAbout"] = "About",
+        ["UiLanguage"] = "Interface language",
+        ["SourceLanguage"] = "Translate from",
+        ["TargetLanguage"] = "Translate to",
+        ["SwapLanguages"] = "Swap",
+        ["AutoDetect"] = "Detect source language automatically",
+        ["TranslateHotkey"] = "Translate",
+        ["ClearHotkey"] = "Clear overlay",
+        ["RegionHotkey"] = "Select region",
+        ["SavedRegionHotkey"] = "Translate saved region",
+        ["Record"] = "Record",
+        ["PressAnyKey"] = "Press a key...",
+        ["MouseTriggerWarning"] = "Mouse buttons and wheel never block the click itself. Binding \"Mouse Left\" will fire the action on every left click anywhere on your screen - Middle, side buttons, or wheel are safer choices.",
+        ["RequireCtrl"] = "Require Ctrl",
+        ["RequireAlt"] = "Require Alt",
+        ["RequireShift"] = "Require Shift",
+        ["SwallowHotkey"] = "Block the key from reaching other apps",
+        ["OcrEngine"] = "OCR engine",
+        ["WindowsOcr"] = "Windows built-in",
+        ["TesseractOcr"] = "Tesseract",
+        ["TessdataPath"] = "tessdata folder",
+        ["MinConfidence"] = "Minimum confidence",
+        ["Provider"] = "Translation provider",
+        ["AzureKey"] = "Azure Translator key",
+        ["AzureRegion"] = "Azure region",
+        ["DeepLKey"] = "DeepL API key",
+        ["LibreUrl"] = "LibreTranslate server URL",
+        ["LibreKey"] = "LibreTranslate API key (optional)",
+        ["OfflinePath"] = "Offline models folder",
+        ["DownloadPacks"] = "Manage language packs",
+        ["TestConnection"] = "Test",
+        ["OverlayOpacity"] = "Overlay opacity",
+        ["MaxFontSize"] = "Maximum font size",
+        ["OverlayFont"] = "Overlay font",
+        ["ShowOriginalOnHover"] = "Show original text on hover",
+        ["AutoHideOverlay"] = "Hide overlay automatically",
+        ["OverlayTimeout"] = "Hide after (seconds)",
+        ["StartWithWindows"] = "Start with Windows",
+        ["ActiveMonitorOnly"] = "Capture active monitor only",
+        ["IconOpacity"] = "Floating icon opacity",
+        ["CacheTranslations"] = "Cache translations",
+        ["ResetToDefaults"] = "Reset to defaults",
+        ["ConfirmReset"] = "This resets every setting, including hotkeys and translation provider, back to the defaults. Continue?",
+        ["AdHocRegionHotkey"] = "Translate a picked region (one-time)",
+        ["Temperature"] = "Temperature",
+        ["PromptTemplate"] = "Prompt template",
+        ["PromptTemplateHint"] = "Use {from}, {to} and {text} as placeholders for the source language, target language, and the text to translate.",
+        ["Browse"] = "Browse...",
+        ["StatusReady"] = "Ready",
+        ["StatusCapturing"] = "Capturing screen...",
+        ["StatusRecognizing"] = "Recognizing text...",
+        ["StatusTranslating"] = "Translating...",
+        ["StatusDone"] = "Done",
+        ["StatusNoText"] = "No text found on screen",
+        ["ErrorTitle"] = "Error",
+        ["ProviderNotConfigured"] = "This provider is not configured yet. Open Settings to add your key.",
+        ["OfflineModelMissing"] = "No offline model found for this language pair.",
+        ["AboutText"] = "Screen Translator captures your screen, recognizes text and draws the translation on top of it. The first time you use a new language, it downloads a small OCR language file automatically from the official Tesseract project.",
+        ["ThirdParty"] = "Third-party licenses"
+    };
+
+    public static readonly Dictionary<string, string> Persian = new()
+    {
+        ["AppName"] = "مترجم صفحه نمایش",
+        ["Translate"] = "ترجمهٔ صفحه",
+        ["SelectRegion"] = "انتخاب ناحیه",
+        ["ClearOverlay"] = "پاک کردن ترجمه",
+        ["Settings"] = "تنظیمات",
+        ["Exit"] = "خروج",
+        ["ViewText"] = "متن استخراج‌شده و ترجمه",
+        ["ManualTranslate"] = "ترجمهٔ متن",
+        ["ExtractedTextLabel"] = "متن استخراج‌شده",
+        ["TranslatedTextLabel"] = "متن ترجمه‌شده",
+        ["Copy"] = "کپی",
+        ["NoTranslationYet"] = "هنوز ترجمه‌ای انجام نشده. اول صفحه را ترجمه کن.",
+        ["InputTextLabel"] = "متنی که می‌خواهی ترجمه شود",
+        ["ResultLabel"] = "ترجمه",
+        ["TranslateButton"] = "ترجمه",
+        ["Save"] = "ذخیره",
+        ["Cancel"] = "انصراف",
+        ["TabGeneral"] = "عمومی",
+        ["TabLanguages"] = "زبان‌ها",
+        ["TabShortcuts"] = "میان‌برها",
+        ["TabOcr"] = "تشخیص متن",
+        ["TabTranslation"] = "ترجمه",
+        ["TabAppearance"] = "ظاهر",
+        ["TabAbout"] = "درباره",
+        ["UiLanguage"] = "زبان برنامه",
+        ["SourceLanguage"] = "ترجمه از",
+        ["TargetLanguage"] = "ترجمه به",
+        ["SwapLanguages"] = "جابه‌جایی",
+        ["AutoDetect"] = "تشخیص خودکار زبان مبدأ",
+        ["TranslateHotkey"] = "ترجمه",
+        ["ClearHotkey"] = "پاک کردن ترجمه",
+        ["RegionHotkey"] = "انتخاب ناحیه",
+        ["SavedRegionHotkey"] = "ترجمهٔ ناحیهٔ ذخیره‌شده",
+        ["Record"] = "ضبط",
+        ["PressAnyKey"] = "یک کلید بزنید...",
+        ["MouseTriggerWarning"] = "دکمه‌های موس و اسکرول هرگز خود کلیک را مسدود نمی‌کنند. اگر «Mouse Left» را انتخاب کنی، با هر کلیک چپ در هر جای صفحه (نه فقط داخل این برنامه) عملیات اجرا می‌شود. دکمهٔ وسط، دکمه‌های کناری موس، یا اسکرول انتخاب‌های امن‌تری هستند.",
+        ["RequireCtrl"] = "نیاز به Ctrl",
+        ["RequireAlt"] = "نیاز به Alt",
+        ["RequireShift"] = "نیاز به Shift",
+        ["SwallowHotkey"] = "جلوگیری از رسیدن کلید به برنامه‌های دیگر",
+        ["OcrEngine"] = "موتور تشخیص متن",
+        ["WindowsOcr"] = "موتور داخلی ویندوز",
+        ["TesseractOcr"] = "تسرکت",
+        ["TessdataPath"] = "پوشهٔ tessdata",
+        ["MinConfidence"] = "حداقل دقت",
+        ["Provider"] = "سرویس ترجمه",
+        ["AzureKey"] = "کلید Azure Translator",
+        ["AzureRegion"] = "منطقهٔ Azure",
+        ["DeepLKey"] = "کلید DeepL",
+        ["LibreUrl"] = "آدرس سرور LibreTranslate",
+        ["LibreKey"] = "کلید LibreTranslate (اختیاری)",
+        ["OfflinePath"] = "پوشهٔ مدل‌های آفلاین",
+        ["DownloadPacks"] = "مدیریت بسته‌های زبان",
+        ["TestConnection"] = "آزمایش",
+        ["OverlayOpacity"] = "شفافیت اورلی",
+        ["MaxFontSize"] = "بیشینهٔ اندازهٔ قلم",
+        ["OverlayFont"] = "قلم اورلی",
+        ["ShowOriginalOnHover"] = "نمایش متن اصلی هنگام اشاره",
+        ["AutoHideOverlay"] = "پنهان شدن خودکار اورلی",
+        ["OverlayTimeout"] = "پنهان شدن بعد از (ثانیه)",
+        ["StartWithWindows"] = "اجرا هنگام روشن شدن ویندوز",
+        ["ActiveMonitorOnly"] = "فقط نمایشگر فعال",
+        ["IconOpacity"] = "شفافیت آیکون شناور",
+        ["CacheTranslations"] = "ذخیرهٔ موقت ترجمه‌ها",
+        ["ResetToDefaults"] = "بازگشت به تنظیمات پیش‌فرض",
+        ["ConfirmReset"] = "همهٔ تنظیمات، از جمله شرط‌کات‌ها و سرویس ترجمه، به حالت پیش‌فرض برمی‌گردد. ادامه می‌دهی؟",
+        ["AdHocRegionHotkey"] = "ترجمهٔ ناحیهٔ متغیر (یک‌بار مصرف)",
+        ["Temperature"] = "دمای مدل (Temperature)",
+        ["PromptTemplate"] = "قالب دستور (Prompt)",
+        ["PromptTemplateHint"] = "از {from} و {to} و {text} به‌عنوان جای‌گزین زبان مبدأ، زبان مقصد و متنی که باید ترجمه شود استفاده کن.",
+        ["Browse"] = "انتخاب...",
+        ["StatusReady"] = "آماده",
+        ["StatusCapturing"] = "در حال گرفتن تصویر...",
+        ["StatusRecognizing"] = "در حال تشخیص متن...",
+        ["StatusTranslating"] = "در حال ترجمه...",
+        ["StatusDone"] = "انجام شد",
+        ["StatusNoText"] = "متنی روی صفحه پیدا نشد",
+        ["ErrorTitle"] = "خطا",
+        ["ProviderNotConfigured"] = "این سرویس هنوز پیکربندی نشده است. از تنظیمات کلید خود را وارد کنید.",
+        ["OfflineModelMissing"] = "برای این جفت‌زبان مدل آفلاینی پیدا نشد.",
+        ["AboutText"] = "مترجم صفحه نمایش از صفحه عکس می‌گیرد، متن را تشخیص می‌دهد و ترجمه را روی همان متن نشان می‌دهد. دفعهٔ اول که از یک زبان جدید استفاده می‌کنی، یک فایل کوچک تشخیص متن برای آن زبان به‌صورت خودکار از مخزن رسمی Tesseract دانلود می‌شود.",
+        ["ThirdParty"] = "مجوزهای کتابخانه‌های جانبی"
+    };
+}

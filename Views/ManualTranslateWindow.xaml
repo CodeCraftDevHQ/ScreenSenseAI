@@ -1,0 +1,42 @@
+<Window x:Class="ScreenTranslator.Views.ManualTranslateWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:loc="clr-namespace:ScreenTranslator.Localization"
+        Title="{Binding Source={x:Static loc:Loc.Instance}, Path=[ManualTranslate]}"
+        Width="560" Height="560"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="CanResize"
+        FlowDirection="{Binding Source={x:Static loc:Loc.Instance}, Path=FlowDirection}">
+
+    <Grid Margin="14">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="0" Text="{Binding Source={x:Static loc:Loc.Instance}, Path=[InputTextLabel]}"
+                   FontWeight="SemiBold" Margin="0,0,0,4" />
+
+        <TextBox x:Name="InputTextBox" Grid.Row="1" AcceptsReturn="True"
+                 TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" Margin="0,0,0,10" />
+
+        <DockPanel Grid.Row="2" Margin="0,0,0,10">
+            <Button x:Name="TranslateButton" DockPanel.Dock="Right" Width="110" Click="OnTranslateClick"
+                    Content="{Binding Source={x:Static loc:Loc.Instance}, Path=[TranslateButton]}" />
+            <ComboBox x:Name="TargetLanguageBox" DockPanel.Dock="Right" Width="180" Margin="0,0,10,0" />
+            <TextBlock Text="{Binding Source={x:Static loc:Loc.Instance}, Path=[TargetLanguage]}" VerticalAlignment="Center" />
+        </DockPanel>
+
+        <DockPanel Grid.Row="3" Margin="0,0,0,4">
+            <Button x:Name="CopyResultButton" DockPanel.Dock="Right" Width="90" Click="OnCopyResult"
+                    Content="{Binding Source={x:Static loc:Loc.Instance}, Path=[Copy]}" />
+            <TextBlock Text="{Binding Source={x:Static loc:Loc.Instance}, Path=[ResultLabel]}" FontWeight="SemiBold" VerticalAlignment="Center" />
+        </DockPanel>
+
+        <TextBox x:Name="ResultTextBox" Grid.Row="4" IsReadOnly="True" AcceptsReturn="True"
+                 TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" />
+    </Grid>
+</Window>

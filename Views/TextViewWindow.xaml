@@ -1,0 +1,37 @@
+<Window x:Class="ScreenTranslator.Views.TextViewWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:loc="clr-namespace:ScreenTranslator.Localization"
+        Title="{Binding Source={x:Static loc:Loc.Instance}, Path=[ViewText]}"
+        Width="560" Height="520"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="CanResize"
+        FlowDirection="{Binding Source={x:Static loc:Loc.Instance}, Path=FlowDirection}">
+
+    <Grid Margin="14">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <DockPanel Grid.Row="0" Margin="0,0,0,4">
+            <Button x:Name="CopyOriginalButton" DockPanel.Dock="Right" Width="90" Click="OnCopyOriginal"
+                    Content="{Binding Source={x:Static loc:Loc.Instance}, Path=[Copy]}" />
+            <TextBlock Text="{Binding Source={x:Static loc:Loc.Instance}, Path=[ExtractedTextLabel]}" FontWeight="SemiBold" VerticalAlignment="Center" />
+        </DockPanel>
+
+        <TextBox x:Name="OriginalTextBox" Grid.Row="1" IsReadOnly="True" AcceptsReturn="True"
+                 TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" Margin="0,0,0,10" />
+
+        <DockPanel Grid.Row="2" Margin="0,0,0,4">
+            <Button x:Name="CopyTranslatedButton" DockPanel.Dock="Right" Width="90" Click="OnCopyTranslated"
+                    Content="{Binding Source={x:Static loc:Loc.Instance}, Path=[Copy]}" />
+            <TextBlock Text="{Binding Source={x:Static loc:Loc.Instance}, Path=[TranslatedTextLabel]}" FontWeight="SemiBold" VerticalAlignment="Center" />
+        </DockPanel>
+
+        <TextBox x:Name="TranslatedTextBox" Grid.Row="3" IsReadOnly="True" AcceptsReturn="True"
+                 TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" />
+    </Grid>
+</Window>
