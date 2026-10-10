@@ -6,6 +6,7 @@ public enum TranslationProviderKind
     LibreTranslate,
     Ollama,
     LmStudio,
+    CloudAi,
     Azure,
     DeepL,
     Offline

@@ -152,6 +152,7 @@
                             <ComboBoxItem Content="LibreTranslate (local server, better quality)" Tag="LibreTranslate" />
                             <ComboBoxItem Content="Ollama (local AI model, best offline quality)" Tag="Ollama" />
                             <ComboBoxItem Content="LM Studio (local AI model already running on your machine)" Tag="LmStudio" />
+                            <ComboBoxItem Content="Cloud AI with your own API key (Gemini, OpenAI, Claude, OpenRouter, Groq...)" Tag="CloudAi" />
                             <ComboBoxItem Content="Azure Translator (needs internet + key)" Tag="Azure" />
                             <ComboBoxItem Content="DeepL (needs internet + key)" Tag="DeepL" />
                         </ComboBox>
@@ -209,6 +210,42 @@
                             <TextBox x:Name="LmStudioPromptBox" AcceptsReturn="True" TextWrapping="Wrap" Height="70" />
                             <TextBlock Text="{Binding Source={x:Static loc:Loc.Instance}, Path=[PromptTemplateHint]}"
                                        TextWrapping="Wrap" Foreground="Gray" FontSize="11" Margin="0,2,0,0" />
+                        </StackPanel>
+
+                        <StackPanel x:Name="CloudAiPanel" Visibility="Collapsed">
+                            <Label Content="{Binding Source={x:Static loc:Loc.Instance}, Path=[CloudAiService]}" />
+                            <ComboBox x:Name="CloudAiPresetBox" SelectionChanged="OnCloudPresetChanged" />
+
+                            <Label Content="{Binding Source={x:Static loc:Loc.Instance}, Path=[CloudAiKey]}" />
+                            <PasswordBox x:Name="CloudAiKeyBox" Padding="4" />
+                            <TextBlock x:Name="CloudAiHelpText" Margin="0,4,0,0" TextWrapping="Wrap" Foreground="Gray" FontSize="11" />
+
+                            <StackPanel x:Name="CloudAiBaseUrlPanel" Visibility="Collapsed">
+                                <Label Content="{Binding Source={x:Static loc:Loc.Instance}, Path=[CloudAiBaseUrl]}" />
+                                <TextBox x:Name="CloudAiBaseUrlBox" />
+                            </StackPanel>
+
+                            <Label Content="{Binding Source={x:Static loc:Loc.Instance}, Path=[CloudAiModel]}" />
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <ComboBox x:Name="CloudAiModelBox" IsEditable="True" Grid.Column="0" />
+                                <Button x:Name="LoadModelsButton" Grid.Column="1" Margin="6,0,0,0" Padding="12,0" Click="OnLoadModels"
+                                        Content="{Binding Source={x:Static loc:Loc.Instance}, Path=[LoadModels]}" />
+                            </Grid>
+
+                            <Label Content="{Binding Source={x:Static loc:Loc.Instance}, Path=[Temperature]}" />
+                            <Slider x:Name="CloudAiTemperatureSlider" Minimum="0" Maximum="1" TickFrequency="0.05" IsSnapToTickEnabled="True" />
+
+                            <Label Content="{Binding Source={x:Static loc:Loc.Instance}, Path=[CloudAiExtra]}" />
+                            <TextBox x:Name="CloudAiExtraBox" AcceptsReturn="True" TextWrapping="Wrap" Height="50" />
+                            <TextBlock Text="{Binding Source={x:Static loc:Loc.Instance}, Path=[CloudAiExtraHint]}"
+                                       TextWrapping="Wrap" Foreground="Gray" FontSize="11" Margin="0,2,0,0" />
+
+                            <TextBlock Text="{Binding Source={x:Static loc:Loc.Instance}, Path=[CloudAiPrivacy]}"
+                                       TextWrapping="Wrap" Foreground="IndianRed" FontSize="11" Margin="0,8,0,0" />
                         </StackPanel>
 
                         <Button x:Name="TestButton" Height="30" Margin="0,14,0,0" Click="OnTestProvider"

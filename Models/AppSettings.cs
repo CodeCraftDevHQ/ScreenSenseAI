@@ -42,6 +42,10 @@ public sealed class AppSettings
     public string LmStudioModel { get; set; } = string.Empty;
     public double LmStudioTemperature { get; set; } = 0.2;
     public string LmStudioPromptTemplate { get; set; } = DefaultPromptTemplate;
+    public string CloudAiPreset { get; set; } = "Gemini";
+    public Dictionary<string, CloudAiProfile> CloudAiProfiles { get; set; } = new();
+    public double CloudAiTemperature { get; set; } = 0.2;
+    public string CloudAiExtraInstructions { get; set; } = string.Empty;
     public string OfflineModelsPath { get; set; } = string.Empty;
 
     public double OverlayOpacity { get; set; } = 1.0;

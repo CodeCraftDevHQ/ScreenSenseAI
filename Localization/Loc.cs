@@ -110,6 +110,14 @@ public sealed class Loc : INotifyPropertyChanged
         ["ProviderNotConfigured"] = "This provider is not configured yet. Open Settings to add your key.",
         ["OfflineModelMissing"] = "No offline model found for this language pair.",
         ["AboutText"] = "Screen Translator captures your screen, recognizes text and draws the translation on top of it. The first time you use a new language, it downloads a small OCR language file automatically from the official Tesseract project.",
+        ["CloudAiService"] = "AI service",
+        ["CloudAiKey"] = "API key",
+        ["CloudAiModel"] = "Model",
+        ["CloudAiBaseUrl"] = "API address (OpenAI-compatible, e.g. https://example.com/v1)",
+        ["LoadModels"] = "Load list",
+        ["CloudAiExtra"] = "Extra instructions (optional)",
+        ["CloudAiExtraHint"] = "Added to the translation instructions, for example: \"Use a casual tone\" or \"This is a video game, keep character names unchanged\".",
+        ["CloudAiPrivacy"] = "Privacy: the text recognized on your screen is sent to this service. Free plans of some services may use it to improve their models, so avoid translating private content.",
         ["ThirdParty"] = "Third-party licenses"
     };
 
@@ -196,6 +204,14 @@ public sealed class Loc : INotifyPropertyChanged
         ["ProviderNotConfigured"] = "این سرویس هنوز پیکربندی نشده است. از تنظیمات کلید خود را وارد کنید.",
         ["OfflineModelMissing"] = "برای این جفت‌زبان مدل آفلاینی پیدا نشد.",
         ["AboutText"] = "مترجم صفحه نمایش از صفحه عکس می‌گیرد، متن را تشخیص می‌دهد و ترجمه را روی همان متن نشان می‌دهد. دفعهٔ اول که از یک زبان جدید استفاده می‌کنی، یک فایل کوچک تشخیص متن برای آن زبان به‌صورت خودکار از مخزن رسمی Tesseract دانلود می‌شود.",
+        ["CloudAiService"] = "سرویس هوش مصنوعی",
+        ["CloudAiKey"] = "کلید API",
+        ["CloudAiModel"] = "مدل",
+        ["CloudAiBaseUrl"] = "آدرس API (سازگار با OpenAI، مثل https://example.com/v1)",
+        ["LoadModels"] = "دریافت فهرست",
+        ["CloudAiExtra"] = "دستور اضافه (اختیاری)",
+        ["CloudAiExtraHint"] = "به دستور ترجمه اضافه می‌شود؛ مثلاً: «لحن محاوره‌ای باشد» یا «این یک بازی است، اسم شخصیت‌ها را تغییر نده».",
+        ["CloudAiPrivacy"] = "حریم خصوصی: متنی که روی صفحه تشخیص داده می‌شود برای این سرویس ارسال می‌شود. در طرح رایگان بعضی سرویس‌ها ممکن است از آن برای بهبود مدل‌ها استفاده شود، پس محتوای خصوصی را با این روش ترجمه نکن.",
         ["ThirdParty"] = "مجوزهای کتابخانه‌های جانبی"
     };
 }

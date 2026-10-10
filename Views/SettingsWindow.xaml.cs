@@ -19,6 +19,7 @@ public partial class SettingsWindow : Window
     private AppSettings _draft;
     private readonly HotkeyManager _hotkeys;
     private string? _recordingTarget;
+    private string? _cloudShownPreset;
 
     public SettingsWindow(SettingsService settings, HotkeyManager hotkeys)
     {
@@ -40,6 +41,9 @@ public partial class SettingsWindow : Window
             SourceLanguageBox.Items.Add(language);
             TargetLanguageBox.Items.Add(language);
         }
+
+        foreach (var preset in CloudAiPresets.All)
+            CloudAiPresetBox.Items.Add(new ComboBoxItem { Content = preset.DisplayName, Tag = preset.Id });
 
         foreach (var family in Fonts.SystemFontFamilies.OrderBy(x => x.Source))
             FontBox.Items.Add(family.Source);
@@ -97,6 +101,13 @@ public partial class SettingsWindow : Window
         LmStudioTemperatureSlider.Value = _draft.LmStudioTemperature;
         LmStudioPromptBox.Text = _draft.LmStudioPromptTemplate;
 
+        CloudAiTemperatureSlider.Value = _draft.CloudAiTemperature;
+        CloudAiExtraBox.Text = _draft.CloudAiExtraInstructions;
+        _cloudShownPreset = null;
+        SelectByTag(CloudAiPresetBox, _draft.CloudAiPreset);
+        _cloudShownPreset = CurrentCloudPresetId();
+        LoadCloudProfile(_cloudShownPreset);
+
         FontBox.Text = _draft.OverlayFontFamily;
         OverlayOpacitySlider.Value = _draft.OverlayOpacity;
         MaxFontSlider.Value = _draft.MaxFontSize;
@@ -126,6 +137,7 @@ public partial class SettingsWindow : Window
         LibrePanel.Visibility = tag == "LibreTranslate" ? Visibility.Visible : Visibility.Collapsed;
         OllamaPanel.Visibility = tag == "Ollama" ? Visibility.Visible : Visibility.Collapsed;
         LmStudioPanel.Visibility = tag == "LmStudio" ? Visibility.Visible : Visibility.Collapsed;
+        CloudAiPanel.Visibility = tag == "CloudAi" ? Visibility.Visible : Visibility.Collapsed;
 
         ProviderHintText.Text = tag switch
         {
@@ -141,11 +153,97 @@ public partial class SettingsWindow : Window
             "LmStudio" => Loc.Instance.Language == "fa"
                 ? "به LM Studio نیاز دارد: مدلی را در آن بارگذاری کن و از تب Developer/Local Server دکمهٔ Start Server را بزن. آدرس پیش‌فرض http://localhost:1234 است."
                 : "Needs LM Studio: load a model in it and press Start Server on the Developer/Local Server tab. Default address is http://localhost:1234.",
+            "CloudAi" => Loc.Instance.Language == "fa"
+                ? "از هر سرویس هوش مصنوعی که کلید API دارید (Gemini، ChatGPT، Claude، OpenRouter، Groq و غیره) برای ترجمه استفاده می‌کند. به اینترنت نیاز دارد و ترجمه با کیفیت بالا انجام می‌شود."
+                : "Uses any AI service you have an API key for (Gemini, ChatGPT, Claude, OpenRouter, Groq, ...) to translate. Needs internet; quality is high.",
             "Azure" or "DeepL" => Loc.Instance.Language == "fa"
                 ? "به اینترنت و یک کلید API رایگان از سرویس‌دهنده نیاز دارد."
                 : "Needs internet and a free API key from the provider.",
             _ => string.Empty
         };
+    }
+
+    private string CurrentCloudPresetId() =>
+        (CloudAiPresetBox.SelectedItem as ComboBoxItem)?.Tag?.ToString() ?? CloudAiPresets.All[0].Id;
+
+    private void OnCloudPresetChanged(object sender, SelectionChangedEventArgs e)
+    {
+        if (_cloudShownPreset is not null)
+            SaveCloudProfile(_draft, _cloudShownPreset);
+
+        _cloudShownPreset = CurrentCloudPresetId();
+        LoadCloudProfile(_cloudShownPreset);
+    }
+
+    private void LoadCloudProfile(string id)
+    {
+        var preset = CloudAiPresets.Get(id);
+        _draft.CloudAiProfiles.TryGetValue(preset.Id, out var profile);
+
+        CloudAiKeyBox.Password = profile?.Key ?? string.Empty;
+        CloudAiModelBox.Items.Clear();
+        CloudAiModelBox.Text = string.IsNullOrWhiteSpace(profile?.Model) ? preset.DefaultModel : profile.Model;
+        CloudAiBaseUrlBox.Text = string.IsNullOrWhiteSpace(profile?.BaseUrl) ? preset.DefaultBaseUrl : profile.BaseUrl;
+        CloudAiBaseUrlPanel.Visibility = preset.Id == "Custom" ? Visibility.Visible : Visibility.Collapsed;
+
+        CloudAiHelpText.Text = string.IsNullOrEmpty(preset.KeyHelp)
+            ? string.Empty
+            : (Loc.Instance.Language == "fa" ? "دریافت کلید: " : "Get a key: ") + preset.KeyHelp;
+    }
+
+    private void SaveCloudProfile(AppSettings target, string id)
+    {
+        var preset = CloudAiPresets.Get(id);
+
+        target.CloudAiProfiles[preset.Id] = new CloudAiProfile
+        {
+            Key = CloudAiKeyBox.Password.Trim(),
+            Model = CloudAiModelBox.Text.Trim(),
+            BaseUrl = CloudAiBaseUrlBox.Text.Trim()
+        };
+    }
+
+    private async void OnLoadModels(object sender, RoutedEventArgs e)
+    {
+        var preset = CloudAiPresets.Get(CurrentCloudPresetId());
+
+        try
+        {
+            LoadModelsButton.IsEnabled = false;
+            TestResultText.Foreground = System.Windows.Media.Brushes.Gray;
+            TestResultText.Text = "...";
+
+            var factory = new TranslatorFactory(_settings);
+
+            var models = await CloudAiTranslator.ListModelsAsync(
+                factory.CloudAiHttp,
+                preset,
+                CloudAiKeyBox.Password,
+                CloudAiBaseUrlBox.Text);
+
+            var current = CloudAiModelBox.Text;
+            CloudAiModelBox.Items.Clear();
+
+            foreach (var model in models)
+                CloudAiModelBox.Items.Add(model);
+
+            CloudAiModelBox.Text = current;
+            CloudAiModelBox.IsDropDownOpen = true;
+
+            TestResultText.Foreground = System.Windows.Media.Brushes.SeaGreen;
+            TestResultText.Text = Loc.Instance.Language == "fa"
+                ? $"{models.Count} مدل پیدا شد."
+                : $"{models.Count} models found.";
+        }
+        catch (Exception ex)
+        {
+            TestResultText.Foreground = System.Windows.Media.Brushes.IndianRed;
+            TestResultText.Text = ex.Message;
+        }
+        finally
+        {
+            LoadModelsButton.IsEnabled = true;
+        }
     }
 
     private void OnSwap(object sender, RoutedEventArgs e)
@@ -341,6 +439,11 @@ public partial class SettingsWindow : Window
         target.LmStudioModel = LmStudioModelBox.Text.Trim();
         target.LmStudioTemperature = LmStudioTemperatureSlider.Value;
         target.LmStudioPromptTemplate = string.IsNullOrWhiteSpace(LmStudioPromptBox.Text) ? AppSettings.DefaultPromptTemplate : LmStudioPromptBox.Text;
+
+        target.CloudAiTemperature = CloudAiTemperatureSlider.Value;
+        target.CloudAiExtraInstructions = CloudAiExtraBox.Text.Trim();
+        target.CloudAiPreset = CurrentCloudPresetId();
+        SaveCloudProfile(target, target.CloudAiPreset);
 
         target.OverlayFontFamily = string.IsNullOrWhiteSpace(FontBox.Text) ? "Segoe UI" : FontBox.Text;
         target.OverlayOpacity = OverlayOpacitySlider.Value;

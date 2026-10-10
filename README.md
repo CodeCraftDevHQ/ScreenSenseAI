@@ -74,6 +74,7 @@ No API keys ship with the app. Open Settings and enter your own:
 - Azure Translator: key and region from the Azure portal free tier
 - DeepL: free API key, keys ending in `:fx` use the free endpoint
 - LibreTranslate: your own server URL, or any instance you are allowed to use
+- Cloud AI: your own key for Google Gemini, OpenAI, Anthropic (Claude), OpenRouter, Groq, DeepSeek, Mistral, or any OpenAI-compatible address. All recognized blocks go out in one request, and the answer is parsed as a JSON array
 - Offline: a folder containing one subfolder per language pair, named `en-fa`, `zh-ja`, etc.
 
 ## Remaining work
