@@ -77,6 +77,8 @@ No API keys ship with the app. Open Settings and enter your own:
 - Cloud AI: your own key for Google Gemini, OpenAI, Anthropic (Claude), OpenRouter, Groq, DeepSeek, Mistral, or any OpenAI-compatible address. All recognized blocks go out in one request, and the answer is parsed as a JSON array
 - Offline: a folder containing one subfolder per language pair, named `en-fa`, `zh-ja`, etc.
 
+API keys are stored in `%AppData%\ScreenTranslator\settings.json` encrypted with Windows DPAPI (current user scope). A settings file copied to another PC or user account cannot be decrypted, so the keys must be entered again there.
+
 ## Remaining work
 
 - `OfflineTranslator.TranslateAsync` needs the ONNX encoder/decoder and SentencePiece tokenizer
