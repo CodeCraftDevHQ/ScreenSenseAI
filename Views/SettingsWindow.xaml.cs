@@ -369,8 +369,7 @@ public partial class SettingsWindow : Window
     {
         CollectInto(_draft);
 
-        var temporary = new SettingsService();
-        temporary.Replace(_draft);
+        var temporary = SettingsService.InMemory(_draft);
 
         var factory = new TranslatorFactory(temporary);
         var translator = factory.Create(_draft.Provider);

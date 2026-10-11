@@ -18,6 +18,7 @@ public sealed class SettingsService
     private const string ProtectedPrefix = "dpapi:";
 
     private readonly string _path;
+    private readonly bool _persist = true;
 
     public AppSettings Current { get; private set; } = new();
 
@@ -33,8 +34,20 @@ public sealed class SettingsService
         _path = Path.Combine(folder, "settings.json");
     }
 
+    private SettingsService(AppSettings initial)
+    {
+        _path = string.Empty;
+        _persist = false;
+        Current = initial;
+    }
+
+    public static SettingsService InMemory(AppSettings initial) => new(initial);
+
     public void Load()
     {
+        if (!_persist)
+            return;
+
         try
         {
             if (!File.Exists(_path))
@@ -67,6 +80,9 @@ public sealed class SettingsService
 
     private void WriteFile()
     {
+        if (!_persist)
+            return;
+
         try
         {
             var copy = JsonSerializer.Deserialize<AppSettings>(JsonSerializer.Serialize(Current, Options), Options)

@@ -29,7 +29,7 @@ public sealed class Loc : INotifyPropertyChanged
 
     public static readonly Dictionary<string, string> English = new()
     {
-        ["AppName"] = "Screen Translator",
+        ["AppName"] = "ScreenSense AI",
         ["Translate"] = "Translate screen",
         ["SelectRegion"] = "Select region",
         ["ClearOverlay"] = "Clear overlay",
@@ -109,7 +109,7 @@ public sealed class Loc : INotifyPropertyChanged
         ["ErrorTitle"] = "Error",
         ["ProviderNotConfigured"] = "This provider is not configured yet. Open Settings to add your key.",
         ["OfflineModelMissing"] = "No offline model found for this language pair.",
-        ["AboutText"] = "Screen Translator captures your screen, recognizes text and draws the translation on top of it. The first time you use a new language, it downloads a small OCR language file automatically from the official Tesseract project.",
+        ["AboutText"] = "ScreenSense AI captures your screen, recognizes text and draws the translation on top of it. The first time you use a new language, it downloads a small OCR language file automatically from the official Tesseract project.",
         ["CloudAiService"] = "AI service",
         ["CloudAiKey"] = "API key",
         ["CloudAiModel"] = "Model",

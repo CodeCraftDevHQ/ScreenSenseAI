@@ -2,12 +2,12 @@
   #define AppVersion "1.0.0"
 #endif
 
-#define AppName "Screen Translator"
+#define AppName "ScreenSense AI"
 #define AppExeName "ScreenTranslator.exe"
 #define AppPublisher "Your Name"
-#define PublishDir "..\publish"
+#define PublishDir "publish"
 #define FarsiIsl AddBackslash(CompilerPath) + "Languages\Farsi.isl"
-#define LicensePath "..\LICENSE"
+#define LicensePath "LICENSE"
 
 [Setup]
 AppId={{D18E82CB-7949-4285-ABFA-0F814F6CC51B}
@@ -19,9 +19,9 @@ DefaultGroupName={#AppName}
 DisableProgramGroupPage=yes
 UninstallDisplayIcon={app}\{#AppExeName}
 UninstallDisplayName={#AppName}
-OutputDir=..\dist
+OutputDir=dist
 OutputBaseFilename=ScreenTranslator-Setup-{#AppVersion}
-SetupIconFile=..\ScreenTranslator\app.ico
+SetupIconFile=app.ico
 Compression=lzma2/max
 SolidCompression=yes
 ArchitecturesAllowed=x64compatible

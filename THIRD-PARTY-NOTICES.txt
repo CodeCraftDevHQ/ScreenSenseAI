@@ -10,10 +10,15 @@ This product bundles or depends on the following components.
 5. Tesseract language data, downloaded automatically from
    github.com/tesseract-ocr/tessdata_fast (Apache License 2.0) — Copyright (c)
    Google Inc. and contributors.
+6. Tesseract .NET wrapper (Apache License 2.0) — Copyright (c) Charles Weld
+   and contributors.
+7. System.Security.Cryptography.ProtectedData (MIT License) — Copyright (c)
+   .NET Foundation and Contributors. Used to encrypt stored API keys with
+   Windows DPAPI.
 
 Optional components, only if you enable them:
 
-6. OPUS-MT translation models (CC BY 4.0) — Language Technology Research Group,
+8. OPUS-MT translation models (CC BY 4.0) — Language Technology Research Group,
    University of Helsinki. If you ship these models you must credit the authors
    and state that the models are licensed under CC BY 4.0.
 
