@@ -17,15 +17,14 @@ Capture text on your screen, translate it, and overlay the translation directly 
 
 **Demo 1**
 
-<video src="docs/v1.mp4" controls muted width="100%">
-  <a href="docs/v1.mp4">Watch Demo Video 1 (v1.mp4)</a>
-</video>
 
-**Demo 2**
 
-<video src="docs/v2.mp4" controls muted width="100%">
-  <a href="docs/v2.mp4">Watch Demo Video 2 (v2.mp4)</a>
-</video>
+https://github.com/user-attachments/assets/70463516-a934-45bb-a9e0-2d47a7897a99
+
+
+
+https://github.com/user-attachments/assets/d20d8760-436b-44bb-a0b4-46e8ba403775
+
 
 ---
 
