@@ -4,7 +4,7 @@
 
 #define AppName "ScreenSense AI"
 #define AppExeName "ScreenTranslator.exe"
-#define AppPublisher "Your Name"
+#define AppPublisher "CodeCraftDevHQ"
 #define PublishDir "publish"
 #define FarsiIsl AddBackslash(CompilerPath) + "Languages\Farsi.isl"
 #define LicensePath "LICENSE"
